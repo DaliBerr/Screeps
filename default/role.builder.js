@@ -15,12 +15,30 @@ var roleBuilder = {
 	    if(creep.memory.building) { 
 			
 	        var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+			// var outtargets = Game.rooms['W4N3'].find(FIND_CONSTRUCTION_SITES);
+			// console.log(outtargets)
             if(targets.length) {
 				var target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
                 if(creep.build(target) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(target, {visualizePathStyle: {stroke: '#00f91a'}});
                 }
             }
+			// else if(outtargets.length) {
+			//     if(creep.room.name !== 'W4N3'){
+			// 		const exitDir = creep.room.findExitTo(creep.memory.targetRoom);
+			// 		const exit = creep.pos.findClosestByRange(exitDir);
+			// 		creep.moveTo(exit, { visualizePathStyle: { stroke: '#ffaa00' } });
+			// 		creep.say('🚪 Moving');
+			// 	}
+			// 	else{
+			// 		const ConstructionSite = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES)
+			// 		if(ConstructionSite){
+			// 			if (creep.build(constructionSite) === ERR_NOT_IN_RANGE) {
+			// 				creep.moveTo(constructionSite, { visualizePathStyle: { stroke: '#ffffff' } });
+			// 			}
+			// 		}
+			// 	}
+			// }
 	    }
 	    else {
 	        var container = creep.room.find(FIND_STRUCTURES, {

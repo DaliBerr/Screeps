@@ -8,6 +8,7 @@ var roleArmy = require('role.army');
 var roleOutHarvester = require('role.outharvester');
 var roleTowerKeeper = require('role.towerkeeper');
 var roleEmergencyHarvester = require('role.emergencyharvester');
+var roleOutBuilder = require('role.outbuilder');
 var rampartRepairIndex = 0;
 module.exports.loop = function (){
 
@@ -47,12 +48,15 @@ module.exports.loop = function (){
     var emergencyharvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'emergencyharvester');
     console.log('Emergencyharvesters: '+ emergencyharvesters.length);
 
+    var outbuilders = _.filter(Game.creeps, (creep) => creep.memory.role == 'outbuilder');
+    console.log('Outbuilders' + outbuilders.length);
+
     var towers = Game.rooms['W5N3'].find(FIND_STRUCTURES, {
         filter: (structure) => structure.structureType === STRUCTURE_TOWER
     });
     
     var buildingTargetnum = Game.rooms['W5N3'].find(FIND_CONSTRUCTION_SITES)
-    var outharvester_num_toW4N3 = 4;
+    var outharvester_num_toW4N3 = 0;
     var outharvester_num_toW5N2 = 2;
 
     var assignedToW4N3 = _.filter(Game.creeps, (c) => c.memory.role === 'outharvester' && c.memory.targetRoom === 'W4N3').length;
@@ -119,7 +123,7 @@ module.exports.loop = function (){
             Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE], newName, 
                 {memory: {role: 'harvester'}});
     }
-    if(upgraders.length < 3){
+    if(upgraders.length < 4){
         var newName = 'Upgrader' + Game.time;
         console.log('Spawning new upgrader:'+ newName);
         Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE], newName, 
@@ -149,13 +153,13 @@ module.exports.loop = function (){
             {memory: {role:'soldier'}});
     }
 
-    if(armys.length <2){
+    if(armys.length <0){
         var newName = 'Army' + Game.time;
         console.log('Spawning new army:'+ newName);
         Game.spawns['Spawn1'].spawnCreep([CLAIM, MOVE], newName, 
             {memory: {role:'army'}});
     }
-    if(outharvesters.length < 6){
+    if(outharvesters.length < 2){
         var newName = 'OutHarvester' + Game.time;
         console.log('Spawning new out harvester:'+ newName);
         Game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE, MOVE], newName, 
@@ -166,6 +170,13 @@ module.exports.loop = function (){
         console.log('Spawning new towerkeeper:'+ newName);
         Game.spawns['Spawn1'].spawnCreep([CARRY,CARRY,CARRY,CARRY, MOVE,MOVE], newName, 
             {memory: {role: 'towerkeeper'}});
+    }
+
+    if(outbuilders.length < 2){
+        var newName = 'OutBuilder' + Game.time;
+        console.log('Spawning new out builder:'+ newName);
+        Game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], newName, 
+            {memory: {role: 'outbuilder'}});
     }
 
     for(var name in Game.creeps) {
@@ -218,6 +229,9 @@ module.exports.loop = function (){
         if(creep.memory.role == 'emergencyharvester'){
             roleEmergencyHarvester.run(creep);
         }
+        if(creep.memory.role == 'outbuilder'){
+            roleOutBuilder.run(creep,'W4N3');
+        }
     }
     }
     else{
@@ -264,6 +278,9 @@ module.exports.loop = function (){
                 }
                 if(creep.memory.role == 'emergencyharvester'){
                     roleEmergencyHarvester.run(creep);
+                }
+                if(creep.memory.role == 'army'){
+                    roleArmy.run(creep);
                 }
         }
     }
