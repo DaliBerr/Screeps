@@ -51,7 +51,7 @@ var roleSoldier = {
                 }
             }
         }
-        if(flag_defense){
+        else if(flag_defense){
             const patrolPoints = [new RoomPosition(10, 10, flag_defense.pos.roomName), new RoomPosition(40, 40, flag_defense.pos.roomName)];
             const nextPatrolPoint = patrolPoints[Game.time % patrolPoints.length];
             

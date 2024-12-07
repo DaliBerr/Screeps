@@ -149,7 +149,7 @@ module.exports.loop = function (){
             {memory: {role:'soldier'}});
     }
 
-    if(armys.length <0){
+    if(armys.length <2){
         var newName = 'Army' + Game.time;
         console.log('Spawning new army:'+ newName);
         Game.spawns['Spawn1'].spawnCreep([CLAIM, MOVE], newName, 
