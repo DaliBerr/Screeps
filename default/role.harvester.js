@@ -1,17 +1,33 @@
 var roleHarvester = {
 
     /** @param {Creep} creep **/
-    run: function(creep) {
-        if (!creep.memory.sourceId) {
-            const sources = creep.room.find(FIND_SOURCES);
-            const source = sources.find((s) => {
-                const creepsAssigned = _.filter(Game.creeps, (c) => c.memory.sourceId === s.id);
-                return creepsAssigned.length < 1; 
-            });
-
-            if (source) {
-                creep.memory.sourceId = source.id;
-                creep.say(`🔄 Source ${source.id}`);
+    run: function(creep,level) {
+        if(level === 'high'){
+            if (!creep.memory.sourceId) {
+                const sources = creep.room.find(FIND_SOURCES);
+                const source = sources.find((s) => {
+                    const creepsAssigned = _.filter(Game.creeps, (c) => c.memory.sourceId === s.id);
+                    return creepsAssigned.length < 1; 
+                });
+    
+                if (source) {
+                    creep.memory.sourceId = source.id;
+                    creep.say(`🔄 Source ${source.id}`);
+                }
+            }
+        }
+        if(level === 'low'){
+            if (!creep.memory.sourceId) {
+                const sources = creep.room.find(FIND_SOURCES);
+                const source = sources.find((s) => {
+                    const creepsAssigned = _.filter(Game.creeps, (c) => c.memory.sourceId === s.id);
+                    return creepsAssigned.length < 3; 
+                });
+    
+                if (source) {
+                    creep.memory.sourceId = source.id;
+                    creep.say(`🔄 Source ${source.id}`);
+                }
             }
         }
 

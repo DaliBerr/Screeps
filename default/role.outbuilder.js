@@ -15,21 +15,18 @@ var roleOutBuilder = {
 	    if(!creep.memory.building){
 
 			var containerHome = homeRoom.find(FIND_STRUCTURES, {
-		
 				filter: (structure) => {
 					return ( 
-						structure.structureType == STRUCTURE_STORAGE||
-						structure.structureType == STRUCTURE_CONTAINER) &&
+						structure.structureType == STRUCTURE_STORAGE) &&
 						structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
 			}
 			});
 			
 			if(containerHome.length > 0 && creep.room == homeRoom) {
+
 				var target = creep.pos.findClosestByRange(FIND_STRUCTURES,{
 					filter: (structure) => {
-						return (structure.structureType == STRUCTURE_STORAGE||
-							structure.structureType == STRUCTURE_CONTAINER
-						) &&
+						return (structure.structureType == STRUCTURE_STORAGE) &&
 							structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
 					}
 				})
